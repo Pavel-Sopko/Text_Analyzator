@@ -29,8 +29,8 @@ are found in multiple limestone layers, which lie some
 represent several varieties of perch, as well as 
 other freshwater genera and herring similar to those 
 in modern oceans. Other fish such as paddlefish, 
-garpike and stingray are also present.'''
-         ]
+garpike and stingray are also present.
+''']
 ODDELOVAC = "=" * 35
 ODDELOVAC_mini = "-" * 15
 data_uzivatel = {
@@ -39,20 +39,18 @@ data_uzivatel = {
     'mike': 'password123',
     'liz': 'pass123'
 }
-print(f"""{ODDELOVAC}
+print(f"""
+{ODDELOVAC}
 Welcome in application 'Text Analyzator'
 {ODDELOVAC}
 """)
 
-username = input("Enter username: ")
-heslo = input("Enter password: ")
-
+username = input("Enter username:")
+heslo = input("Enter password:")
 if data_uzivatel.get(username.lower()) == heslo:
     print("Login OK, continue.")
-
 else:
     print("Sorry, your login is incorrect. Exit application."), exit()
-
 print(f"""{ODDELOVAC}
 Welcome to the app, {username}
 We have 3 texts to be analyzed.
@@ -60,14 +58,22 @@ We have 3 texts to be analyzed.
 """)
 for i, text in enumerate(TEXTS, 1):
     print(f"TEXT{i}\n{text}\n{ODDELOVAC}")
+vyber_cisla = input("Enter a number btw. 1 and 3 to select: ")
+if not vyber_cisla.isdigit():
+    print("Wrong choice.")
+    exit()
+elif int(vyber_cisla) < 1 or int(vyber_cisla) > 3:
+    print("Wrong choice.")
+    exit()
 
-vyber_textu = TEXTS[int(input("Enter a number btw. 1 and 3 to select: ")) - 1]
+vyber_textu = TEXTS[int(vyber_cisla) - 1]
+list_slov_z_textu_rozdelen = vyber_textu.split()
+list_slov_z_textu = []
+for text in list_slov_z_textu_rozdelen:
+    list_slov_z_textu.append(text.strip(" ,.:!"))
 
-list_slov_z_textu = vyber_textu.strip(",.:!").split()
 pocet_slov_text = len(list_slov_z_textu)
-
-pocet_tittlecase, pocet_uppercase, pocet_lowercase, pocet_numeric, suma_numeric = 0, 0, 0, 0, 0
-
+pocet_tittlecase = pocet_uppercase = pocet_lowercase = pocet_numeric = suma_numeric = 0
 for slovo in list_slov_z_textu:
     if slovo.istitle():
         pocet_tittlecase += 1
@@ -78,7 +84,6 @@ for slovo in list_slov_z_textu:
     elif slovo.isdigit():
         pocet_numeric += 1
         suma_numeric += int(slovo)
-
 print(f"""{ODDELOVAC}
 There are {pocet_slov_text} words in the selected text.
 There are {pocet_tittlecase} titlecase words.
@@ -88,13 +93,11 @@ There are {pocet_numeric} numeric strings.
 The sum of all the numbers {suma_numeric}
 {ODDELOVAC}
 """)
-
 graf = {}
 for slovicka in list_slov_z_textu:
     graf[len(slovicka)] = graf.get(len(slovicka), 0) + 1
-
 vsechny_hodnoty = sorted(list(graf.items()))
-
-print("LEN | OCCURENCES | Nr.")
+print("LEN|     OCCURENCES     |Nr.")
 for neco in vsechny_hodnoty:
-    print(neco[0], "|", "*" * int(neco[1]), "|", neco[1])
+    pocet_hvezd = "*" * int(neco[1])
+    print(f"{neco[0]:>3}|{pocet_hvezd:<20}|{neco[1]:<3}")
