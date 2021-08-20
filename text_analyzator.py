@@ -70,7 +70,8 @@ vyber_textu = TEXTS[int(vyber_cisla) - 1]
 list_slov_z_textu_rozdelen = vyber_textu.split()
 list_slov_z_textu = []
 for text in list_slov_z_textu_rozdelen:
-    list_slov_z_textu.append(text.strip(" ,.:!"))
+    if text.strip(' ,.:!') != '':
+        list_slov_z_textu.append(text)
 
 pocet_slov_text = len(list_slov_z_textu)
 pocet_tittlecase = pocet_uppercase = pocet_lowercase = pocet_numeric = suma_numeric = 0
